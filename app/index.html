@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <title>logistics</title>
+</head>
+<body>
+<!--oncontextmenu=self.event.returnValue=false onselectstart="return false"-->
+<div ui-view>
+</div>
+<!--<div ng-include="'tpls/common/loading.html'"></div>-->
+<div ng-include="'tpls/common/right-menu.html'"></div>
+<!-- framework -->
+<script src="js/jsBuild/lib.js"></script>
+<script src="js/jsBuild/app.js"></script>
+<script>
+    setInterval(function () {
+        var tag = document.body.querySelector('.tagCurrent');
+        if (tag && tag.querySelector('.tab-pane')) {
+            var window_height = window.innerHeight;
+            var body_height = document.body.clientHeight;
+            var sub_height = window_height - body_height;
+            var table_height = tag.querySelector('.tabCurrent').querySelector('.grid_body').offsetHeight;
+            tag.querySelector('.tabCurrent').querySelector('.grid_body').style.height = (table_height + sub_height).toString() + "px";
+        }
+        else {
+            if (tag && tag.querySelector('.grid_body')) {
+                var window_height = window.innerHeight;
+                var body_height = document.body.clientHeight;
+                var sub_height = window_height - body_height;
+                var table_height = tag.querySelector('.grid_body').offsetHeight;
+                tag.querySelector('.grid_body').style.height = (table_height + sub_height).toString() + "px";
+            }
+        }
+    }, 1)
+    document.addEventListener("click", function () {
+        window.showContextMenu = false;
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+
+  "id": 1,
+  "code": "编号",
+  "name": "1",
+  "type": "SHIP",
+  "dataFrom": "APPLICATION",
+  "description": "-",
+  "status" : "ENABLED"
+
+}

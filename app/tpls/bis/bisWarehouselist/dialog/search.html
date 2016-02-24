@@ -1,0 +1,97 @@
+<style>
+    .dialog_title {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dfdfdf;
+    }
+
+    .search_left {
+        display: inline-table;
+        width: 180px;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .search_one {
+        padding: 10px;
+        height: 300px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+    }
+
+    .search_two {
+        padding: 10px;
+        height: 150px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .search_three {
+        padding: 10px;
+    }
+
+    .search_right {
+        display: inline-table;
+        width: 360px;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .f_left {
+        float: left;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    <h4>条件查询</h4>
+</div>
+<div class="modal-body" style="text-align:center;">
+    <div class="search_left">
+        <div class="search_one">
+            <div class="dialog_title">预定查询</div>
+            <div class="list-group" role="group">
+                <a class="list-group-item  active">名字查询</a>
+                <a class="list-group-item ">自定义查询</a>
+            </div>
+        </div>
+        <div class="search_two">
+            <div class="dialog_title">条件选择</div>
+            <label class="f_left">
+                列表字段
+                <select ng-model="colname" ng-options="t.key as t.colName for t in title" ng-change="changeCol()">
+                </select>
+            </label>
+            <label class="f_left">
+                查询条件
+                <select ng-model="condition" ng-options="d.value as d.key for d in data" ng-change="changeCond(d)">
+                </select>
+            </label>
+
+            <div class="f_left" style="white-space: nowrap">
+                条件值
+                <input style="width: 100px" type="text"/>
+            </div>
+        </div>
+        <div class="search_three">
+            <button type="button" class="btn btn-default">并且</button>
+            <button type="button" class="btn btn-default">或者</button>
+        </div>
+    </div>
+    <div class="search_right">
+        <div class="search_one">
+            <div class="dialog_title">查询公式</div>
+        </div>
+        <div class="search_two">
+            <div class="dialog_title">新建查询公式</div>
+            <div ></div>
+        </div>
+        <div class="search_three">
+            <button type="button" class="btn btn-default">查询</button>
+            <button type="button" class="btn btn-default">新建保存</button>
+            <button type="button" class="btn btn-default">修改保存</button>
+            <button type="button" class="btn btn-default">重置</button>
+        </div>
+    </div>
+</div>

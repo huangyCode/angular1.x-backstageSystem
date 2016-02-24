@@ -1,0 +1,38 @@
+{
+  "resultValue": [
+    {
+      "id": "1",
+      "name": "仓储管理",
+      "childMenus": [
+        {
+          "id": "3",
+          "name": "仓库管理",
+          "code": "warehouse",
+          "tpls":"tpls/bis/warehouselist.html"
+        },
+        {
+          "id": "4",
+          "name": "库区管理",
+          "code": "warehouseArea",
+          "tpls":"tpls/bis/bisWarehouseAreaList.html"
+        },
+        {
+          "id": "5",
+          "name": "库位管理",
+          "code": "warehouseLocation",
+          "tpls":"tpls/bis/wareitem.html"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "组织信息",
+      "childMenus": [
+        {
+          "id": "7",
+          "name": "组织管理asdasdasd"
+        }
+      ]
+    }
+  ]
+}

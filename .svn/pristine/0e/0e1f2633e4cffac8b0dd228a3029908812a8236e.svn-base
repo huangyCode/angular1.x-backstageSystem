@@ -1,0 +1,153 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a>111</a></li>
+    <li role="presentation"><a>222</a></li>
+</ul>
+<div ng-controller="bisWarehouse">
+    <div class="table-choose">
+        <div class="form-inline m-b-md">
+            <div class="input-group input-magin">
+                <span class="input-group-addon">编号</span>
+                <input type="text" class="form-control">
+            </div>
+            <div class="input-group input-magin">
+                <span class="input-group-addon">名字</span>
+                <input type="text" class="form-control">
+            </div>
+            <div class="input-group input-magin">
+                <span class="input-group-addon">类型</span>
+                <input type="text" class="form-control">
+            </div>
+            <div class="input-group input-magin">
+                <span class="input-group-addon">状态</span>
+                <select class="form-control">
+                    <option value="">生效</option>
+                    <option value="">失效</option>
+                </select>
+            </div>
+            <div class="btn btn-primary input-magin">搜索</div>
+        </div>
+        <!--选择操作-->
+        <div class="m-l-md btn-group dropdown" uib-dropdown>
+            <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+                操作选择 <span class="caret"></span>
+            </button>
+            <style>
+                .disabled {
+                    color: #ccc !important;
+                }
+            </style>
+            <ul class="dropdown-menu">
+                <!--<li ng-repeat="ctrl in ctrlMenu"><a ng-click="ctrl.click()" ng-bind="ctrl.name"></a></li>-->
+                <li><a href="" ng-click="click()">条件查询</a></li>
+                <li><a ng-click="asearch('lg')">高级查询</a></li>
+                <li>
+                    <a ng-click="delete('sm',check())"
+                       ng-class="{'disabled':!check()}">
+                        删除<!--({{warehouse.data.list._getSelectedItems().length}})-->
+                    </a>
+                </li>
+                <li><a data-toggle="modal" data-target="#md" ng-click="updateWarehouse()">修改</a>
+                </li>
+                <li><a href="" ng-mousedown="item($event)">查看详情</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">导出</a></li>
+                <li><a href="#">导入</a></li>
+            </ul>
+        </div>
+        <!--  end  -->
+        <div class="btn-group">
+            <button class="btn btn-info">删除
+                <span class="glyphicon glyphicon-minus"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-info">添加
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-info">修改
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-success">打开
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-danger">关闭
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-success">生效
+                <span class="glyphicon glyphicon-play"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-danger">失效
+                <span class="glyphicon glyphicon glyphicon-stop"></span>
+            </button>
+        </div>
+        <div class="btn-group" style="float: right">
+            <button class="btn btn-default" style="margin-top:2px" ng-click="warehouse.ctrlTableShow()">修改列表显示
+                <span class="fa fa-gear"></span>
+            </button>
+        </div>
+    </div>
+    <div pageutil="warehouse" bodyurl="testJson/warehouse.json" headurl="testJson/ctrlTable.json"
+         filter="warehousefilter"></div>
+</div>
+
+<!-- -------------------------------操作弹框--------------------------------------- -->
+<!-- 删除页面 -->
+<script type="text/ng-template" id="delete.html">
+    <div class="modal-header">
+        <h3 class="modal-title">删除</h3>
+    </div>
+    <div class="modal-body">
+        确认删除？
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<!-- 高级查询 -->
+<script type="text/ng-template" id="advancedSearch.html">
+    <div class="modal-header">
+        <h3 class="modal-title">高级查询</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label class="col-md-3 control-label">编号:</label>
+
+                    <div class="col-md-9">
+                        <input type="text" class="form-control ">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-3 control-label">名字:</label>
+
+                    <div class="col-md-9">
+                        <input type="text" class="form-control ">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group input-magin">
+                <span class="input-group-addon">编号</span>
+                <input type="text" class="form-control">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <center>
+            <button class="btn btn-primary" ng-click="ok()">确认查询</button>
+            <button class="btn btn-warning" ng-click="cancel()">取消</button>
+        </center>
+    </div>
+</script>

@@ -1,0 +1,46 @@
+{
+  "ctrlShow": [
+    {
+      "key": "code",
+      "colName": "编号",
+      "show": true,
+      "width": 100,
+      "sort": 1
+    },
+    {
+      "key": "name",
+      "colName": "名字",
+      "show": true,
+      "width": 200,
+      "sort": 2
+    },
+    {
+      "key": "type",
+      "colName": "类型",
+      "show": true,
+      "width": 200,
+      "sort": 3
+    },
+    {
+      "key": "dataFrom",
+      "colName": "数据来源",
+      "show": true,
+      "width": 200,
+      "sort": 4
+    },
+    {
+      "key": "description",
+      "colName": "描述",
+      "show": true,
+      "width": 200,
+      "sort": 5
+    },
+    {
+      "key": "status",
+      "colName": "状态",
+      "show": true,
+      "width": 200,
+      "sort": 6
+    }
+  ]
+}

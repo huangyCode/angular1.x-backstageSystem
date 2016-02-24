@@ -1,0 +1,97 @@
+<div>
+    <!-- 列表显示 -->
+    <div class="grid">
+        <div class="grid_table">
+            <div class="grid_head">
+                <div class="grid_th">
+                    <label class="i-checks">
+                        <span class="input-checkbox check-img"
+                              ng-class="{selected:pageutil.data.list._selected}"
+                              ng-click="pageutil.data.list._selectAll()">
+                        </span>
+                    </label>
+                </div>
+                <div class="grid_th" ng-repeat="ctrlHeader in pageutil.ctrlShow"
+                     ng-style="{width:(ctrlHeader.width+'px')}"
+                     ng-mouseenter="pageutil.ctrlShow.enThead(ctrlHeader)"
+                     ng-mouseleave="pageutil.ctrlShow.leThead(ctrlHeader)">
+                    <span ng-show="ctrlHeader.show"
+                          ng-bind="ctrlHeader.colName"></span>
+                    <span class="m-l-xs fa fa-lg fa-sort-desc" ng-click="pageutil.ctrlShow.descClick(ctrlHeader)"
+                          ng-show="ctrlHeader.desc"></span>
+                    <span class="m-l-xs fa fa-lg fa-sort-asc" ng-click="pageutil.ctrlShow.ascClick(ctrlHeader)"
+                          ng-show="ctrlHeader.asc"></span>
+                </div>
+            </div>
+            <div class="grid_body">
+                <div class="grid_tr mouse-table" ng-class="{'active-table':item._selected}"
+                     ng-repeat="item in pageutil.data.list" ng-dblclick="xxx()"
+                     ng-click="pageutil.clickDown(pageutil,$index,item,$event);">
+                    <div class="grid_td">
+                        <label class="i-checks">
+                                        <span class="input-checkbox check-img"
+                                              ng-class="{selected:item._selected}"></span>
+                        </label>
+                    </div>
+                    <div class="grid_td" ng-repeat="ctrlBody in pageutil.ctrlShow"
+                         ng-show="ctrlBody.show" ng-style="{width:(ctrlBody.width+'px')}"
+                         title="{{item[ctrlBody.key]}}"><span class="" ng-bind="item[ctrlBody.key]"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--       ---列表显示end---       -->
+    <footer class="panel-footer">
+        <div class="num-list row">
+            <div style="float:left">
+                <div style="font-weight: 600">总数据：<span ng-bind="pageutil.data.total"></span>条</div>
+                <div style="font-weight: 600">已选择：<span
+                        ng-bind="pageutil._getSelectedItems().length"></span>条
+                </div>
+            </div>
+            <div style="float:right;padding-top: 5px">
+                <div style="float:left;padding: 3.5px;" class="m-r-md">
+                    每页显示
+                    <select class="page-size" ng-options="o.value as o.name for o in options"
+                            ng-model="pageutil.pageSize" ng-change="pageutil.go()">
+                    </select>
+                  <!--  <select class="page-size" ng-model="pageutil.pageSize" ng-change="pageutil.go()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">50</option>
+                    </select>-->
+                    行
+                </div>
+                <ul class="pagination pagination-sm">
+                    <li ng-click="pageutil.go(1)">
+                        <a href><i class="fa fa-step-backward"></i></a>
+                    </li>
+                    <li ng-click="pageutil.go(pageutil.pageNum-1)">
+                        <a href><i class="fa fa-chevron-left"></i></a>
+                    </li>
+                    <li ng-class="{active:pageutil.pageNum==i}" ng-repeat="i in pageutil.buttons"
+                        ng-click="pageutil.go(i)">
+                        <a ng-bind="i"></a>
+                    </li>
+                    <li ng-click="pageutil.go(pageutil.pageNum+1)">
+                        <a href><i class="fa fa-chevron-right"></i></a>
+                    </li>
+                    <li ng-click="pageutil.go(pageutil.data.pages)">
+                        <a href><i class="fa fa-step-forward"></i></a>
+                    </li>
+                </ul>
+                <div class="total-pages m-l-md">共<span ng-bind="pageutil.data.pages"></span>页</div>
+                <div class="m-l-md" style="float:left; font-size:15px">
+                    到第
+                    <input class="" style="height:30px;width: 50px;padding: 2px" type="number"
+                           min="1"
+                           max="{{pageutil.data.pages}}" value="{{pageutil.pageNum+1}}"/>
+                    页
+                </div>
+                <button class="m-l-xs" style="height:30px;padding: 2px" ng-click="test()">确定</button>
+            </div>
+        </div>
+    </footer>
+    <!-- 修改列表显示 -->
+</div>
