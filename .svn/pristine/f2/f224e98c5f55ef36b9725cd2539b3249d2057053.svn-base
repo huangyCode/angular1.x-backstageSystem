@@ -1,2 +1,0 @@
-<div class="tab-pane" ng-class="{'tabCurrent':selected}" ng-show="selected" ng-transclude>
-</div>
