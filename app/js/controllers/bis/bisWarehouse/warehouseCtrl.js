@@ -101,28 +101,46 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
     $scope.data = [{value: "=", key: "等于"}, {value: ">", key: "大于"}, {value: "<", key: "小于"}]
     $scope.colname = '';
     $scope.condition = '';
-    $scope.arr = [];
-    $scope.createSearch = function () {
-        $scope.arr.push({
-            active: false,
-            name: "",
-            colname: '',
-            condition: '',
-            value: '',
-            appose: ''
-        });
-    }
+    $scope.newSearch = [{}];
+    $scope.whereCond = '';
+    $scope.value = '';
     $scope.changeCol = function () {
-        console.log($scope.colname);
+        for (var i in $scope.title) {
+            if ($scope.colname == $scope.title[i].key) {
+                $scope.newSearch[$scope.newSearch.length - 1].colname = $scope.colname;
+                $scope.newSearch[$scope.newSearch.length - 1].colnameText = $scope.title[i].colName;
+            }
+        }
+    }
+    $scope.valueKeyDown = function () {
+        $scope.newSearch[$scope.newSearch.length - 1].value = $scope.value;
     }
     $scope.changeCond = function () {
-        $scope.data.value
-            /*for(var i in $scope.data){
-                if($scope.colname ==  $scope.data[i].value){
-                    console.log( $scope.data[i]);
-                    return
-                }
-            }*/
+        for (var i in $scope.data) {
+            if ($scope.condition == $scope.data[i].value) {
+                $scope.newSearch[$scope.newSearch.length - 1].condition = $scope.condition;
+                $scope.newSearch[$scope.newSearch.length - 1].conditionText = $scope.data[i].key;
+            }
+        }
     }
-    $scope.obj = {};
+    $scope.connectJson = [{connect: "and", connectText: "并且"}, {connect: "or", connectText: "或者"}]
+    $scope.connectFn = function (i) {
+        if ($scope.newSearch.length && !$scope.newSearch[$scope.newSearch.length - 1].connect) {
+            $scope.newSearch[$scope.newSearch.length - 1].connect = $scope.connectJson[i].connect;
+            $scope.newSearch[$scope.newSearch.length - 1].connectText = $scope.connectJson[i].connectText;
+            $scope.newSearch.push({});
+            $scope.colname = '';
+            $scope.condition = '';
+            $scope.value = '';
+        }
+    }
+    $scope.andClick = function () {
+        return $scope.connectFn(0);
+    }
+    $scope.orClick = function () {
+        return $scope.connectFn(1);
+    }
+    $scope.searchGo = function () {
+
+    }
 }])
