@@ -99,11 +99,19 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
         $scope.title = data.ctrlShow;
     })
     $scope.data = [{value: "=", key: "等于"}, {value: ">", key: "大于"}, {value: "<", key: "小于"}]
+    $scope.name = '';
     $scope.colname = '';
     $scope.condition = '';
     $scope.newSearch = [{}];
     $scope.whereCond = '';
     $scope.value = '';
+    $scope.restValue = function(){
+        $scope.name = '';
+        $scope.colname = '';
+        $scope.condition = '';
+        $scope.value = '';
+    }
+    //监听新建查字段变化赋给当前新建对象
     $scope.changeCol = function () {
         for (var i in $scope.title) {
             if ($scope.colname == $scope.title[i].key) {
@@ -112,9 +120,15 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
             }
         }
     }
-    $scope.valueKeyDown = function () {
+    //监听新建查询值变化赋给当前新建对象
+    $scope.changeValue = function () {
         $scope.newSearch[$scope.newSearch.length - 1].value = $scope.value;
     }
+    //监听新建查询命名变化付给当前新建对象
+    $scope.changeName = function () {
+        $scope.newSearch[$scope.newSearch.length - 1].name = $scope.name;
+    }
+    //监听新建查询条件变化付给当前新建对象
     $scope.changeCond = function () {
         for (var i in $scope.data) {
             if ($scope.condition == $scope.data[i].value) {
@@ -123,24 +137,47 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
             }
         }
     }
+    //新建查询条件连接and/or
     $scope.connectJson = [{connect: "and", connectText: "并且"}, {connect: "or", connectText: "或者"}]
     $scope.connectFn = function (i) {
-        if ($scope.newSearch.length && !$scope.newSearch[$scope.newSearch.length - 1].connect) {
+        if (!$scope.newSearch[$scope.newSearch.length - 1].connect) {
             $scope.newSearch[$scope.newSearch.length - 1].connect = $scope.connectJson[i].connect;
             $scope.newSearch[$scope.newSearch.length - 1].connectText = $scope.connectJson[i].connectText;
             $scope.newSearch.push({});
-            $scope.colname = '';
-            $scope.condition = '';
-            $scope.value = '';
+            $scope.restValue();
         }
     }
+    //并且按钮
     $scope.andClick = function () {
         return $scope.connectFn(0);
     }
+    //或者按钮
     $scope.orClick = function () {
         return $scope.connectFn(1);
     }
+    //判断新建查询对象是否有值
+    $scope.checkObj = function () {
+        if ($scope.newSearch[$scope.newSearch.length - 1].name
+            && $scope.newSearch[$scope.newSearch.length - 1].colname
+            && $scope.newSearch[$scope.newSearch.length - 1].condition
+            && $scope.newSearch[$scope.newSearch.length - 1].value) {
+            return true;
+        }
+        else return false;
+
+    }
+    $scope.checkNew = function () {
+        if ($scope.checkObj() && !$scope.newSearch[$scope.newSearch.length - 1].connect) return true
+        else return false
+
+    }
+    //新建查询提交按钮
     $scope.searchGo = function () {
 
+    }
+    //重置按钮
+    $scope.reset = function () {
+        $scope.newSearch = [{}];
+        $scope.restValue();
     }
 }])

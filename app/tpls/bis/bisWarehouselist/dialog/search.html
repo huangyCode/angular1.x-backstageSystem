@@ -23,7 +23,7 @@
 
     .search_two {
         padding: 10px;
-        height: 150px;
+        height: 160px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     }
 
@@ -61,7 +61,11 @@
             </div>
         </div>
         <div class="search_two">
-            <div class="dialog_title">条件选择</div>
+            <div class="dialog_title">新建条件选择</div>
+            <label class="f_left">
+                查询命名
+                <input type="text" ng-change="changeName()" ng-model="name" style="width: 100px"/>
+            </label>
             <label class="f_left">
                 列表字段
                 <select ng-model="colname" ng-options="t.key as t.colName for t in title" ng-change="changeCol()">
@@ -75,12 +79,12 @@
 
             <div class="f_left" style="white-space: nowrap">
                 条件值
-                <input ng-change="valueKeyDown()" ng-model="value" style="width: 100px" type="text"/>
+                <input ng-change="changeValue()" ng-model="value" style="width: 100px" type="text"/>
             </div>
         </div>
         <div class="search_three">
-            <button type="button" ng-click="andClick()" class="btn btn-default">并且</button>
-            <button type="button" ng-click="orClick()" class="btn btn-default">或者</button>
+            <button ng-click="andClick()" ng-disabled="!checkObj()" class="btn btn-default">并且</button>
+            <button ng-click="orClick()" ng-disabled="!checkObj()" class="btn btn-default">或者</button>
         </div>
     </div>
     <div class="search_right">
@@ -89,7 +93,7 @@
         </div>
         <div class="search_two">
             <div class="dialog_title">新建查询公式</div>
-            <div style="display: block">
+            <div style="display: block;overflow-y: auto;overflow-x:hidden;height:110px">
                 <div class="row" ng-repeat="new in newSearch">
                     <span ng-bind="new.colnameText"></span>
                     <span class="l" ng-bind="new.conditionText"></span>
@@ -100,9 +104,9 @@
         </div>
         <div class="search_three">
             <button type="button" class="btn btn-default">查询</button>
-            <button type="button" class="btn btn-default">新建保存</button>
+            <button type="button" class="btn btn-default" ng-disabled="!checkNew()">新建保存</button>
             <button type="button" class="btn btn-default">修改保存</button>
-            <button type="button" class="btn btn-default">重置</button>
+            <button type="button" class="btn btn-default" ng-click="reset()">重置</button>
         </div>
     </div>
 </div>
