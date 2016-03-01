@@ -98,18 +98,22 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
     $http.get("testJson/ctrlTable.json").success(function (data) {
         $scope.title = data.ctrlShow;
     })
+    $scope.showNewSearch = false;
     $scope.data = [{value: "=", key: "等于"}, {value: ">", key: "大于"}, {value: "<", key: "小于"}]
+    $scope.searchList = [];
     $scope.name = '';
     $scope.colname = '';
     $scope.condition = '';
     $scope.newSearch = [{}];
     $scope.whereCond = '';
     $scope.value = '';
-    $scope.restValue = function(){
-        $scope.name = '';
+    $scope.restValue = function () {
         $scope.colname = '';
         $scope.condition = '';
         $scope.value = '';
+    }
+    $scope.createSearch = function () {
+        $scope.showNewSearch = !$scope.showNewSearch;
     }
     //监听新建查字段变化赋给当前新建对象
     $scope.changeCol = function () {
@@ -123,10 +127,6 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
     //监听新建查询值变化赋给当前新建对象
     $scope.changeValue = function () {
         $scope.newSearch[$scope.newSearch.length - 1].value = $scope.value;
-    }
-    //监听新建查询命名变化付给当前新建对象
-    $scope.changeName = function () {
-        $scope.newSearch[$scope.newSearch.length - 1].name = $scope.name;
     }
     //监听新建查询条件变化付给当前新建对象
     $scope.changeCond = function () {
@@ -157,27 +157,51 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
     }
     //判断新建查询对象是否有值
     $scope.checkObj = function () {
-        if ($scope.newSearch[$scope.newSearch.length - 1].name
+        if ($scope.name
             && $scope.newSearch[$scope.newSearch.length - 1].colname
             && $scope.newSearch[$scope.newSearch.length - 1].condition
             && $scope.newSearch[$scope.newSearch.length - 1].value) {
             return true;
         }
         else return false;
-
     }
-    $scope.checkNew = function () {
+    //判断是否可以显示新建按钮
+    $scope.checkNewSearch = function () {
         if ($scope.checkObj() && !$scope.newSearch[$scope.newSearch.length - 1].connect) return true
         else return false
-
     }
     //新建查询提交按钮
-    $scope.searchGo = function () {
+    $scope.saveNewSearch = function () {
+        var whereCond = '';
+        for (var i in $scope.newSearch) {
+            if ($scope.newSearch[i].connect) {
+                whereCond = "(" + whereCond +
+                    $scope.newSearch[i].colname +
+                    $scope.newSearch[i].condition +
+                    $scope.newSearch[i].value +
+                    $scope.newSearch[i].connect + ")"
+            }
+        }
+        var searchObje = {};
+        searchObje.name = $scope.name;
+        searchObje.whereCond = whereCond;
+        searchObje.active = false;
+        $scope.searchList.push(searchObje);
+        $scope.name = '';
+        $scope.restValue();
+        $scope.newSearch = [{}];
+        /*if (whereCond) {
+         $http.post(url,whereCond).success(function(data){}).error(function(){});
+         }else{
 
+         }*/
+    }
+    $scope.searchGo = function () {
     }
     //重置按钮
     $scope.reset = function () {
         $scope.newSearch = [{}];
+        $scope.name = '';
         $scope.restValue();
     }
 }])

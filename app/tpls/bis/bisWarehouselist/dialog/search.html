@@ -42,8 +42,10 @@
         float: left;
     }
 
-    .inline {
-        word-wrap: break-word;
+    .search_one_button {
+        padding: 10px 0px;
+        height: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     }
 </style>
 <div class="modal-header">
@@ -56,57 +58,72 @@
         <div class="search_one">
             <div class="dialog_title">预定查询</div>
             <div class="list-group" role="group">
-                <a class="list-group-item ">名字查询</a>
-                <a class="list-group-item ">自定义查询</a>
+                <a class="list-group-item " ng-repeat="list in searchList" ng-bind="list.name"
+                   ng-class="{active : list.active}"></a>
             </div>
         </div>
-        <div class="search_two">
-            <div class="dialog_title">新建条件选择</div>
-            <label class="f_left">
-                查询命名
-                <input type="text" ng-change="changeName()" ng-model="name" style="width: 100px"/>
-            </label>
-            <label class="f_left">
-                列表字段
-                <select ng-model="colname" ng-options="t.key as t.colName for t in title" ng-change="changeCol()">
-                </select>
-            </label>
-            <label class="f_left">
-                查询条件
-                <select ng-model="condition" ng-options="d.value as d.key for d in data" ng-change="changeCond()">
-                </select>
-            </label>
+        <div class="search_one_button">
+            <button class="btn btn-default" ng-click="createSearch()">新建查询
+                <span ng-show="!showNewSearch" class="m-l-lg fa fa-chevron-circle-down"></span>
+                <span ng-show="showNewSearch" class="m-l-lg fa fa-chevron-circle-up"></span>
+            </button>
+        </div>
+        <div ng-show="showNewSearch">
+            <div class="search_two">
+                <div class="dialog_title">新建条件选择</div>
+                <label class="f_left">
+                    查询命名
+                    <input type="text" ng-model="name" style="width: 100px"/>
+                </label>
+                <label class="f_left">
+                    列表字段
+                    <select ng-model="colname" ng-options="t.key as t.colName for t in title" ng-change="changeCol()">
+                    </select>
+                </label>
+                <label class="f_left">
+                    查询条件
+                    <select ng-model="condition" ng-options="d.value as d.key for d in data" ng-change="changeCond()">
+                    </select>
+                </label>
 
-            <div class="f_left" style="white-space: nowrap">
-                条件值
-                <input ng-change="changeValue()" ng-model="value" style="width: 100px" type="text"/>
+                <div class="f_left" style="white-space: nowrap">
+                    条件值
+                    <input ng-change="changeValue()" ng-model="value" style="width: 100px" type="text"/>
+                </div>
             </div>
-        </div>
-        <div class="search_three">
-            <button ng-click="andClick()" ng-disabled="!checkObj()" class="btn btn-default">并且</button>
-            <button ng-click="orClick()" ng-disabled="!checkObj()" class="btn btn-default">或者</button>
+            <div class="search_three">
+                <button ng-click="andClick()" ng-disabled="!checkObj()" class="btn btn-default">并且</button>
+                <button ng-click="orClick()" ng-disabled="!checkObj()" class="btn btn-default">或者</button>
+            </div>
         </div>
     </div>
     <div class="search_right">
         <div class="search_one">
             <div class="dialog_title">查询公式</div>
         </div>
-        <div class="search_two">
-            <div class="dialog_title">新建查询公式</div>
-            <div style="display: block;overflow-y: auto;overflow-x:hidden;height:110px">
-                <div class="row" ng-repeat="new in newSearch">
-                    <span ng-bind="new.colnameText"></span>
-                    <span class="l" ng-bind="new.conditionText"></span>
-                    <span ng-bind="new.value"></span>
-                    <span ng-bind="new.connectText"></span>
+        <div class="search_one_button">
+            <button type="button" class="btn btn-default">查询</button>
+            <button type="button" class="btn btn-default">修改保存</button>
+        </div>
+        <div ng-show="showNewSearch">
+            <div class="search_two">
+                <div class="dialog_title">新建查询公式</div>
+                <div style="display: block;overflow-y: auto;overflow-x:hidden;height:110px">
+                    <div class="row" ng-repeat="new in newSearch">
+                        <span ng-bind="new.colnameText"></span>
+                        <span ng-bind="new.conditionText"></span>
+                        <span ng-bind="new.value"></span>
+                        <span ng-bind="new.connectText"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="search_three">
-            <button type="button" class="btn btn-default">查询</button>
-            <button type="button" class="btn btn-default" ng-disabled="!checkNew()">新建保存</button>
-            <button type="button" class="btn btn-default">修改保存</button>
-            <button type="button" class="btn btn-default" ng-click="reset()">重置</button>
+            <div class="search_three">
+                <button type="button" class="btn btn-default" ng-click="saveNewSearch()"
+                        ng-disabled="!checkNewSearch()">
+                    新建保存
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">重置</button>
+            </div>
         </div>
     </div>
 </div>
