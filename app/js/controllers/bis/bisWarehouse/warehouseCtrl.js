@@ -71,11 +71,12 @@ appModule.controller('bisWarehouse', ['$scope', 'dialog', 'rts', 'au_dialog', fu
         //双击事件
         $scope.xxx = function () {
             console.log("hahaha")
+
         }
     })
 }])
 //删除弹框ctrl
-appModule.controller('wareDeleteCtrl', ['$scope', '$uibModalInstance', 'data', function ($scope, $uibModalInstance, data) {
+appModule.controller('wareDeleteCtrl', ['$scope', '$uibModalInstance', 'data', "testService", function ($scope, $uibModalInstance, data) {
     $scope.ok = function () {
         console.log(data);
         $uibModalInstance.close();

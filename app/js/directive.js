@@ -194,9 +194,9 @@ appModule.directive('grid', function () {
         scope: {
             obj: "@"
         },
-        controller: function ($scope, $http) {
+        controller: ['$scope','$resource',function ($scope, $resource) {
 
-        }
+        }]
     }
 })
     .directive('gridTr', function () {

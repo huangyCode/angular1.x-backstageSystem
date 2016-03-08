@@ -97,7 +97,7 @@ appModule.factory('au_dialog', ['dialoginit', '$http', function (dialoginit, $ht
                 $scope.cancel = $uibModalInstance.dismiss('cancel');
             }]
         }
-        return dialoginit('lg', obj.tpls, ctrl, obj.msg.obj , 'default');
+        return dialoginit('lg', obj.tpls, ctrl, obj.msg.obj, 'default');
     }
 }])
 //小型提示框
