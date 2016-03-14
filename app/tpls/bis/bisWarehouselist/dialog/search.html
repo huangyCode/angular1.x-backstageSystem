@@ -59,7 +59,7 @@
             <div class="dialog_title">预定查询</div>
             <div class="list-group" role="group">
                 <a class="list-group-item " ng-repeat="list in searchList" ng-bind="list.name"
-                   ng-class="{active : list.active}"></a>
+                   ng-class="{active : list.active}" ng-click="selectSearch(list)"></a>
             </div>
         </div>
         <div class="search_one_button">
@@ -100,11 +100,20 @@
     <div class="search_right">
         <div class="search_one">
             <div class="dialog_title">查询公式</div>
-            <div class=""></div>
+            <div style="display: block;overflow-y: auto;overflow-x:hidden;height:110px">
+                <div class="row" ng-repeat="s in showText">
+
+                        <span ng-bind="s.colnameText"></span>
+                        <span ng-bind="s.conditionText"></span>
+                        <span ng-bind="s.value"></span>
+                        <span ng-bind="s.connectText"></span>
+
+                </div>
+            </div>
         </div>
         <div class="search_one_button">
             <button type="button" class="btn btn-default">查询</button>
-            <button type="button" class="btn btn-default">修改保存</button>
+            <button type="button" class="btn btn-default" ng-click="removeSearch()">删除查询</button>
         </div>
         <div ng-show="showNewSearch">
             <div class="search_two">

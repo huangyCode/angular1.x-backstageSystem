@@ -54,17 +54,17 @@ appModule.controller('bisWarehouse', ['$scope', 'dialog', 'rts', 'au_dialog', fu
             dialog({
                 size: 'md',
                 check: true,
-                tpls: 'tpls/bis/bisWarehouselist/dialog/search.html',
-                ctrl: 'wareSearch',
+                tpls: 'tpls/bis/bisWarehouselist/dialog/query.html',
+                ctrl: 'search',
                 backdrop: 'default'
             });
         }
         $scope.asearch = function () {
             dialog({
-                size: 'lg',
+                size: 'md',
                 check: true,
                 tpls: 'tpls/bis/bisWarehouselist/dialog/search.html',
-                ctrl: 'wareDetailCtrl',
+                ctrl: 'wareSearch',
                 backdrop: 'default'
             });
         }
@@ -74,6 +74,16 @@ appModule.controller('bisWarehouse', ['$scope', 'dialog', 'rts', 'au_dialog', fu
 
         }
     })
+}])
+appModule.controller('search', ['$scope', '$http', function ($scope, $http, $uibModal,$uibModalInstance) {
+    $scope.g = {};
+    $scope.ok = function (isValid) {
+        console.log(isValid);
+        $uibModalInstance.close();
+    };
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 }])
 //删除弹框ctrl
 appModule.controller('wareDeleteCtrl', ['$scope', '$uibModalInstance', 'data', "testService", function ($scope, $uibModalInstance, data) {
@@ -95,6 +105,7 @@ appModule.controller('wareDetailCtrl', ['$scope', '$http', '$uibModalInstance', 
         $uibModalInstance.dismiss('cancel');
     };
 }])
+//定制化查询
 appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) {
     $http.get("testJson/ctrlTable.json").success(function (data) {
         $scope.title = data.ctrlShow;
@@ -174,23 +185,26 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
     //新建查询提交按钮
     $scope.saveNewSearch = function () {
         var whereCond = '';
+        var text = '';
         for (var i in $scope.newSearch) {
-            if ($scope.newSearch[i].connect) {
-                whereCond = "(" + whereCond +
-                    $scope.newSearch[i].colname +
-                    $scope.newSearch[i].condition +
-                    $scope.newSearch[i].value +
-                    $scope.newSearch[i].connect + ")"
-            }
+            //循环出where条件
+            whereCond = "(" +
+                $scope.newSearch[i].colname +
+                $scope.newSearch[i].condition +
+                $scope.newSearch[i].value +
+                $scope.newSearch[i].connect + whereCond + ")";
         }
         var searchObje = {};
         searchObje.name = $scope.name;
         searchObje.whereCond = whereCond;
+        searchObje.search = $scope.newSearch;
         searchObje.active = false;
         $scope.searchList.push(searchObje);
         $scope.name = '';
         $scope.restValue();
         $scope.newSearch = [{}];
+        console.log(searchObje.search);
+
         /*if (whereCond) {
          $http.post(url,whereCond).success(function(data){}).error(function(){});
          }else{
@@ -204,5 +218,22 @@ appModule.controller('wareSearch', ['$scope', '$http', function ($scope, $http) 
         $scope.newSearch = [{}];
         $scope.name = '';
         $scope.restValue();
+    }
+    $scope.selectSearch = function (search) {
+        for (var i in $scope.searchList) {
+            $scope.searchList[i].active = false;
+        }
+        search.active = true;
+        $scope.showText = search.search;
+    }
+    $scope.removeSearch = function () {
+        for (var i in $scope.searchList) {
+            if ($scope.searchList[i].active) {
+                $scope.searchList.splice(i, 1);
+                $scope.showText = '';
+                return;
+            }
+        }
+
     }
 }])
